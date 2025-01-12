@@ -42,10 +42,20 @@
         });
         map.addLayer(mapboxLayer);
 
+        // Add OpenStreetMap tile layer
+        var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+ // Set default layer
+ osmLayer.addTo(map);
+
+
+
         // Define custom icon
         var IoTicon = L.icon({
-            iconUrl: "icon.png",  // Ensure this image exists
-            iconSize: [40, 40],
+            iconUrl: "icon2.png",  // Ensure this image exists
+            iconSize: [20, 30],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
@@ -55,7 +65,7 @@
         // Define markers with metadata and URLs for iframes
         var markers = [
             L.marker([-33.97580256588796, 18.455148569840915], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example1.com'></iframe>"),
+                .bindPopup("<iframe class='iframe-popup' src='https://eyeohtea-7883f.web.app/'></iframe>"),
             L.marker([-33.97593925499413, 18.4552646473379], { icon: IoTicon })
                 .bindPopup("<iframe class='iframe-popup' src='https://www.example2.com'></iframe>"),
             L.marker([-33.97581315448854, 18.455271611987715], { icon: IoTicon })
