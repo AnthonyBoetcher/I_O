@@ -24,8 +24,12 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
     <script>
-        // Initialize map
-        var map = L.map("leaflet-map").setView([-33.97581315448854, 18.455271611987715], 16);
+        // Initialize map with higher max zoom level
+        var map = L.map("leaflet-map", {
+            center: [-33.97581315448854, 18.455271611987715],
+            zoom: 16,
+            maxZoom: 20  // Allowing zooming closer for tightly packed markers
+        });
 
         // Add OpenStreetMap tile layer
         var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -43,7 +47,7 @@
             accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw"
         });
 
-        // Set default layer
+        // Set default layer to OpenStreetMap
         osmLayer.addTo(map);
 
         // Define custom icons
