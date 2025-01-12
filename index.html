@@ -28,7 +28,7 @@
         var map = L.map("leaflet-map", {
             center: [-33.97581315448854, 18.455271611987715],
             zoom: 16,
-            maxZoom: 20  // Allowing zooming closer for tightly packed markers
+            maxZoom: 24  // Allowing zooming closer for tightly packed markers
         });
 
         // Add OpenStreetMap tile layer
@@ -37,47 +37,38 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
 
-        // Add Mapbox tile layer
+        // Add Mapbox tile layer (Ensure you use the correct access token and style ID)
         var mapboxLayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
             attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
             maxZoom: 18,
-            id: "mapbox/streets-v11",
+            id: "mapbox/streets-v11", // Specify a valid Mapbox style ID
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw"
+            accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw" // Ensure this access token is correct
         });
 
         // Set default layer to OpenStreetMap
         osmLayer.addTo(map);
 
         // Define custom icons
-        var birdIcon = L.icon({
-            iconUrl: "birdbgr.png",  // Ensure these images are correct and available
-            iconSize: [25, 41],
+        var IoTicon = L.icon({
+            iconUrl: "icon.png",  // Ensure this image exists
+            iconSize: [30, 30],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
             shadowSize: [41, 41]
         });
 
-        var eggIcon = L.icon({
-            iconUrl: "eggbgr1.png",  // Ensure these images are correct and available
-            iconSize: [15, 25],
-            iconAnchor: [7, 25],
-            popupAnchor: [1, -20],
-            shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-            shadowSize: [25, 25]
-        });
-
         // Define markers with metadata
         var markers = [
-            L.marker([-33.97580256588796, 18.455148569840915], { icon: eggIcon }).bindTooltip("XMEE with mate and 2 unringed fledgies, 11/23"),
-            L.marker([-33.97593925499413, 18.4552646473379], { icon: birdIcon }).bindTooltip("WMOY & XMGG, collecting nesting material, 11/23"),
-            L.marker([-33.97581315448854, 18.455271611987715], { icon: eggIcon }).bindTooltip("RMGY with mate and 2 unringed fledgies, 11/23"),
-            L.marker([-33.975699567613475, 18.455282058962442], { icon: birdIcon }).bindTooltip("XMBB, 12/23"),
-            L.marker([-33.9757746504801, 18.455423673508765], { icon: eggIcon }).bindTooltip("RMOV with 2 fledgies, 12/23"),
-            L.marker([-33.9757409594584, 18.45544108513331], { icon: birdIcon }).bindTooltip("WMWG, 12/23"),
-            L.marker([-33.97564469932286, 18.45531107833669], { icon: birdIcon }).bindTooltip("XMRG & WMGY, 12/23")
+            L.marker([-33.97580256588796, 18.455148569840915], { icon: IoTicon }).bindTooltip("XMEE with mate and 2 unringed fledgies, 11/23"),
+            L.marker([-33.97593925499413, 18.4552646473379], { icon: IoTicon }).bindTooltip("WMOY & XMGG, collecting nesting material, 11/23"),
+            L.marker([-33.97581315448854, 18.455271611987715], { icon: IoTicon }).bindTooltip("RMGY with mate and 2 unringed fledgies, 11/23"),
+            L.marker([-33.975699567613475, 18.455282058962442], { icon: IoTicon }).bindTooltip("XMBB, 12/23"),
+            L.marker([-33.9757746504801, 18.455423673508765], { icon: IoTicon }).bindTooltip("RMOV with 2 fledgies, 12/23"),
+            L.marker([-33.9757409594584, 18.45544108513331], { icon: IoTicon }).bindTooltip("WMWG, 12/23"),
+            L.marker([-33.97564469932286, 18.45531107833669], { icon: IoTicon }).bindTooltip("XMRG & WMGY, 12/23")
         ];
 
         // Cluster markers
