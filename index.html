@@ -143,7 +143,7 @@ body {
 
 <script>
 // map var -----------------------------------------------------------------------------------------------------------------------------
-  var map = L.map("leaflet-map").setView([-33.95608517289068, 18.461008169660417], 20);
+  var map = L.map("leaflet-map").setView([-33.97581315448854, 18.455271611987715], 20);
 
   // add basemap  -------------------------------------------------------------------------------------------------------------------------------
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -191,7 +191,7 @@ body {
   });
 
   // define bird sightings --------------------------------------------------------------------------------------------------------
-  var map = L.map('map').setView([-33.97580256588796, 18.455148569840915], 16); // Adjusted the center for your markers
+  var map = L.map('map').setView([-33.97581315448854, 18.455271611987715], 16); // Adjusted the center for your markers
 
   L.Icon.Default.prototype.options.iconUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
 L.Icon.Default.prototype.options.iconRetinaUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png';
@@ -292,53 +292,7 @@ coordinates.forEach(function(coord) {
       entry_7,
   ];
 
-  // function when selecting a marker
-  function selectMarker(e) {
-    let properties = e.sourceTarget.options.properties;
-
-    $("#details").addClass("show-project").removeClass("no-results results");
-
-    $(".project-details .name").text(properties.name)
-/*
-    $(".project-details .type").html(properties.type)
-    $(".project-details .type").text(properties.type)
-    $(".project-details .aim").text(properties.aim)*/
-
-    if (properties.website_url.length > 5) {
-      $(".project-details .website-url").attr("href", properties.website_url).removeAttr("hidden")
-    } else {
-      $(".project-details .website-url").attr("hidden", "hidden")
-    }
-
-    if (properties.file) {
-      $(".project-details .file-url").attr("href", properties.file).removeAttr("hidden")
-    } else {
-      $(".project-details .file-url").attr("hidden", "hidden")
-    }
-
-    let linkText;
-    if (properties.link == "cop") {
-      linkText = "COP linked"
-    } else if (properties.link == "museum") {
-      linkText = "Museum linked"
-    }
-
-    $(".project-details .link").text(linkText);
-
-    $(".project-details img").attr("src", properties.image)
-  }
-
-  // unselect project and return to list
-  function unselectMarker() {
-    $("#details").removeClass("show-project").addClass("results");
-    $(".leaflet-tooltip").remove();
-  }
-
-  // button to unselect marker and return to list
-  $(".return-to-list").click(function() {
-    unselectMarker();
-    filterMarkers()
-  })
+  
 
   // make a feature group with all listings and add it to the map
   const allMarkers = L.featureGroup(allEntries).bindTooltip(function(layer) {return String(layer.options.properties.name)}).on("click", selectMarker);
