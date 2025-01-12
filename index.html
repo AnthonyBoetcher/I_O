@@ -15,60 +15,59 @@
             width: 100vw;
             height: 100vh;
         }
+
+        .iframe-popup {
+            border: none;
+            width: 300px;
+            height: 200px;
+        }
     </style>
 </head>
 <body>
-    <div id="leaflet-map"></div>
+  <div id="leaflet-map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
     <script>
-        // Initialize map with higher max zoom level
-        var map = L.map("leaflet-map", {
-            center: [-33.97581315448854, 18.455271611987715],
-            zoom: 16,
-            maxZoom: 24  // Allowing zooming closer for tightly packed markers
-        });
-
-        // Add OpenStreetMap tile layer
-        var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        });
-
-        // Add Mapbox tile layer (Ensure you use the correct access token and style ID)
-        var mapboxLayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+       // Initialize map
+       var map = L.map("leaflet-map").setView([-33.97581315448854, 18.455271611987715], 24);
+       var mapboxLayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
             attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
             maxZoom: 18,
-            id: "mapbox/streets-v11", // Specify a valid Mapbox style ID
+            id: "mapbox/streets-v11",
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw" // Ensure this access token is correct
+            accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw"
         });
+        map.addLayer(mapboxLayer);
 
-        // Set default layer to OpenStreetMap
-        osmLayer.addTo(map);
-
-        // Define custom icons
+        // Define custom icon
         var IoTicon = L.icon({
             iconUrl: "icon.png",  // Ensure this image exists
-            iconSize: [30, 30],
+            iconSize: [40, 40],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
             shadowSize: [41, 41]
         });
 
-        // Define markers with metadata
+        // Define markers with metadata and URLs for iframes
         var markers = [
-            L.marker([-33.97580256588796, 18.455148569840915], { icon: IoTicon }).bindTooltip("XMEE with mate and 2 unringed fledgies, 11/23"),
-            L.marker([-33.97593925499413, 18.4552646473379], { icon: IoTicon }).bindTooltip("WMOY & XMGG, collecting nesting material, 11/23"),
-            L.marker([-33.97581315448854, 18.455271611987715], { icon: IoTicon }).bindTooltip("RMGY with mate and 2 unringed fledgies, 11/23"),
-            L.marker([-33.975699567613475, 18.455282058962442], { icon: IoTicon }).bindTooltip("XMBB, 12/23"),
-            L.marker([-33.9757746504801, 18.455423673508765], { icon: IoTicon }).bindTooltip("RMOV with 2 fledgies, 12/23"),
-            L.marker([-33.9757409594584, 18.45544108513331], { icon: IoTicon }).bindTooltip("WMWG, 12/23"),
-            L.marker([-33.97564469932286, 18.45531107833669], { icon: IoTicon }).bindTooltip("XMRG & WMGY, 12/23")
+            L.marker([-33.97580256588796, 18.455148569840915], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example1.com'></iframe>"),
+            L.marker([-33.97593925499413, 18.4552646473379], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example2.com'></iframe>"),
+            L.marker([-33.97581315448854, 18.455271611987715], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example3.com'></iframe>"),
+            L.marker([-33.975699567613475, 18.455282058962442], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example4.com'></iframe>"),
+            L.marker([-33.9757746504801, 18.455423673508765], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example5.com'></iframe>"),
+            L.marker([-33.9757409594584, 18.45544108513331], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example6.com'></iframe>"),
+            L.marker([-33.97564469932286, 18.45531107833669], { icon: IoTicon })
+                .bindPopup("<iframe class='iframe-popup' src='https://www.example7.com'></iframe>")
         ];
 
         // Cluster markers
@@ -77,12 +76,6 @@
 
         // Add marker cluster group to the map
         map.addLayer(markerCluster);
-
-        // Add layer control to toggle between layers
-        L.control.layers({
-            "OpenStreetMap": osmLayer,
-            "Mapbox": mapboxLayer
-        }).addTo(map);
 
         // Fit map to markers
         map.fitBounds(markerCluster.getBounds());
