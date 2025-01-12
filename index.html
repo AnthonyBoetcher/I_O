@@ -133,16 +133,6 @@ footer{
     <body>      
       <div id="leaflet-map"></div>
 
-<footer class="">
-  
-<div class="container">
-  <div class="row">
-      <h4>@ I_O</h4>&#x1f16d;<h4>2025</h4>
-      <a href="mailto:eyeconicards@gmail.com">eyeconicards@gmail.com</a>
-      <img width="150vw" class="footer-logo" src="logo.png">
-    </div>
-  </div>
-
 </footer>
 
 
@@ -363,99 +353,6 @@ coordinates.forEach(function(coord) {
   clusteredMarkers.addLayer(allMarkers);
   map.addLayer(clusteredMarkers);
 
-  var filteredLayer = false;
-  var clusteredFilteredMarkers = false;
-
-  // function to show filtered items on the map
-  function filterMarkers() {
-    // if a filtered layer exists, remove it from the map
-    // if not, remove all markers
-    if (filteredLayer != false) {
-      clusteredFilteredMarkers.removeFrom(map)
-    } else {
-      clusteredMarkers.removeFrom(map)
-    };
-
-    // check what the user has selected in the dropdowns
-    let search = $(".filters input.search").val()
-    let type = $(".filters select.type").val()
-    let aim = $(".filters select.aim").val()
-    let year = $(".filters select.year").val()
-
-
-    let filteredEntries = allEntries;
-
-    if (search != "") {
-      filteredEntries = filteredEntries.filter(entry => entry.options.properties.name.toUpperCase().includes(search.toUpperCase()));
-    }
-
-    if (type != "all") {
-      filteredEntries = filteredEntries.filter(entry => entry.options.properties.type == type);
-    }
-
-
-    if (aim != "all") {
-      filteredEntries = filteredEntries.filter(entry => entry.options.properties.aim == aim);
-    }
-
-    if (year != "all") {
-      filteredEntries = filteredEntries.filter(entry => entry.options.properties.year == year);
-    }
-
-    if (filteredEntries.length > 0) {
-      $("#details").removeClass("no-results show-project").addClass("results");
-
-      $("#results-count").text(filteredEntries.length)
-      if (filteredEntries.length == 1) {
-        $("#results-count-plural").text("Sightings")
-      } else {
-        $("#results-count-plural").text("Sightings")
-      }
-
-      $(".results-table tbody").html("");
-
-      filteredLayer = L.featureGroup(filteredEntries).bindTooltip(function(layer) {return String(layer.options.properties.name)});
-
-      clusteredFilteredMarkers = L.markerClusterGroup();
-      clusteredFilteredMarkers.addLayer(filteredLayer);
-      map.addLayer(clusteredFilteredMarkers);
-
-      $(filteredLayer.getLayers()).each(function() {
-        $(".results-table tbody").append("<tr class='listed-project' data-id='" + this._leaflet_id + "'><td>" + this.options.properties.name + "</td><tr>");
-      })
-
-      map.fitBounds(filteredLayer.getBounds())
-    } else {
-      noFilterResults()
-    }
-
-    if (filteredEntries.length < 289) {
-      $(".reset-filter-container").removeAttr("hidden")
-    } else {
-      $(".reset-filter-container").attr("hidden", "hidden")
-    }
-  }
-
-  // run filter whenever one of the dropdown filters changes
-  $(".filters select").change(function() {
-    filterMarkers()
-  })
-
-  $(".filters .search").keyup(function() {
-    filterMarkers();
-  })
-
-  // function to run when there are no filter matches
-  function noFilterResults() {
-    $("#details").addClass("no-results").removeClass("show-project results");
-  }
-
-  // clear all filters with button
-  $(".reset-filter").click(function() {
-    $("select.filter").val("all")
-    $(".search.filter").val("")
-    filterMarkers();
-  })
 
   // click on project in the list to select the marker
   // $(document.body).on("click", ".listed-project", function(event) {
