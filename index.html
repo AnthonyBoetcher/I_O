@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+
     <style>
         #leaflet-map {
             width: 100vw;
@@ -25,15 +27,28 @@
         // Initialize map
         var map = L.map("leaflet-map").setView([-33.97581315448854, 18.455271611987715], 16);
 
-        // Add base map
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        // Add OpenStreetMap tile layer
+        var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+        });
+
+        // Add Mapbox tile layer
+        var mapboxLayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+            attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
+            maxZoom: 18,
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: "pk.eyJ1IjoibmV3YW50dHdvIiwiYSI6ImNscWF3eHFvNjFxMDkyc252bDZnMHo0bW4ifQ.aibMJNvuCUcEtYZmu9VTVw"
+        });
+
+        // Set default layer
+        osmLayer.addTo(map);
 
         // Define custom icons
         var birdIcon = L.icon({
-            iconUrl: "birdbgr.png",
+            iconUrl: "birdbgr.png",  // Ensure these images are correct and available
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -42,7 +57,7 @@
         });
 
         var eggIcon = L.icon({
-            iconUrl: "eggbgr1.png",
+            iconUrl: "eggbgr1.png",  // Ensure these images are correct and available
             iconSize: [15, 25],
             iconAnchor: [7, 25],
             popupAnchor: [1, -20],
@@ -64,7 +79,15 @@
         // Cluster markers
         var markerCluster = L.markerClusterGroup();
         markers.forEach(marker => markerCluster.addLayer(marker));
+
+        // Add marker cluster group to the map
         map.addLayer(markerCluster);
+
+        // Add layer control to toggle between layers
+        L.control.layers({
+            "OpenStreetMap": osmLayer,
+            "Mapbox": mapboxLayer
+        }).addTo(map);
 
         // Fit map to markers
         map.fitBounds(markerCluster.getBounds());
