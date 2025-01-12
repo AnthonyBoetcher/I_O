@@ -22,6 +22,7 @@
             height: 200px;
             transition: all 0.3s ease-in-out; /* Transition for smooth hover effect */
             position: relative;
+            margin-top: 20px; /* Space between title and iframe */
         }
 
         .iframe-expanded {
@@ -55,6 +56,31 @@
             display: none;
         }
 
+        /* Link style for the clickable text */
+        .popup-title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10; /* Make sure it stays on top of the iframe */
+        }
+
+        .popup-title:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Container for the popup content */
+        .popup-container {
+            position: relative;
+            padding-top: 40px; /* Space for the title */
+        }
     </style>
 </head>
 <body>
@@ -79,7 +105,7 @@
 
         // Add OpenStreetMap tile layer
         var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+            maxZoom: 20,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
 
@@ -99,19 +125,19 @@
         // Define markers with metadata and URLs for iframes
         var markers = [
             L.marker([-33.97580256588796, 18.455148569840915], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://eyeohtea-7883f.web.app/'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://eyeohtea-7883f.web.app/' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://eyeohtea-7883f.web.app/'></iframe></div>"),
             L.marker([-33.97593925499413, 18.4552646473379], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example2.com'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example2.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example2.com'></iframe></div>"),
             L.marker([-33.97581315448854, 18.455271611987715], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example3.com'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example3.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example3.com'></iframe></div>"),
             L.marker([-33.975699567613475, 18.455282058962442], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example4.com'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example4.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example4.com'></iframe></div>"),
             L.marker([-33.9757746504801, 18.455423673508765], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example5.com'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example5.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example5.com'></iframe></div>"),
             L.marker([-33.9757409594584, 18.45544108513331], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example6.com'></iframe>"),
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example6.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example6.com'></iframe></div>"),
             L.marker([-33.97564469932286, 18.45531107833669], { icon: IoTicon })
-                .bindPopup("<iframe class='iframe-popup' src='https://www.example7.com'></iframe>")
+                .bindPopup("<div class='popup-container'><a class='popup-title' href='https://www.example7.com' target='_blank'>Visit Site</a><iframe class='iframe-popup' src='https://www.example7.com'></iframe></div>")
         ];
 
         // Cluster markers
